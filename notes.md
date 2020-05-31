@@ -30,9 +30,8 @@ $$
   - Then $xy \in type(AB)$.
   - If $z \in type(AB)$, then $z/y \in type(A)$.
   - If $z \in type(AB)$, then $x\backslash z \in type(B)$.
-- $x \rightarrow y \Leftrightarrow x \in type(A) \rightarrow y \in type(B)$
+- $x \rightarrow y \Leftrightarrow (\forall expr(A) : x \in type(A) \Rightarrow y \in type(A))$
 - $x \leftrightarrows y \Leftrightarrow x \rightarrow y \wedge y \rightarrow x$
 
 ## References
 - "The Mathematics of Sentence Structure" by Joachim Lambek, 1958
-
