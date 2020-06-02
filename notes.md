@@ -1,25 +1,33 @@
-<!-- This document is written in a format that is compatible with the "Markdown Math" plugin for vscode. -->
 # Lambek Calculus
 
 ## Syntactic Rules
 
 - **Rule 1**: "Simplification"
 $$
-(x/y)y \rightarrow x \\
+(x/y)y \rightarrow x
+$$
+$$
 y(y\backslash x) \rightarrow x
 $$
+
 - **Rule 2**: "V-Associativity"
 $$
 (x\backslash y)/z \leftrightarrows x\backslash (y/z)
 $$
+
 - **Rule 3**: "Elimination"
 $$
-(x/y)(y/z) \rightarrow x/z \\
+(x/y)(y/z) \rightarrow x/z
+$$
+$$
 (x\backslash y)(y\backslash z) \rightarrow x\backslash z
 $$
+
 - **Rule 4**: "Type Raising"
 $$
-x \rightarrow y/(x \backslash y) \\
+x \rightarrow y/(x \backslash y)
+$$
+$$
 x \rightarrow (y / x) \backslash x
 $$
 
