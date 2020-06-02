@@ -51,6 +51,7 @@ def _parse(string):  # DEBUG
 
 def try_parse(string):
     """Try to parse string as a lambek type.
+    If the parse succeeds, return a LambekType.
     If the parse fails, return None.
     """
     try:
