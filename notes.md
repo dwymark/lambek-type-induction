@@ -47,8 +47,8 @@ $$
 
 1. $\forall A\in L\ \forall x,y \in T : A\triangleright xy \Rightarrow ( \exists B,C\in L : A=BC\ \&\ B\triangleright x \ \&\ C \triangleright y)$
 2. $\forall A, B \in L\ \forall x, y \in T : A \triangleright x\ \& \ B\triangleright y \Leftrightarrow AB \triangleright xy$
-3. $\forall A, B \in L : B \triangleright y\ \& \ AB \triangleright z \Rightarrow A \triangleright z/y$
-4. $\forall A, B \in L : A \triangleright x\ \& \ AB \triangleright z \Rightarrow B \triangleright x\backslash z$
+3. $\forall A \in L\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in L: B \triangleright y \Rightarrow AB \triangleright z)$
+4. $\forall B \in L\ \forall x, z \in T :  B \triangleright x\backslash z \Leftrightarrow (\forall A \in L: A \triangleright x \Rightarrow AB \triangleright z)$
 5. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright y$
 6. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
 
