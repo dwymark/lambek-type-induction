@@ -93,45 +93,63 @@ For all lexemes $W\in X$,
 1. $\forall A \in L\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in L: B \triangleright y \Rightarrow AB \triangleright z)$
 2. $\forall B \in L\ \forall x, z \in T :  B \triangleright x\backslash z \Leftrightarrow (\forall A \in L: A \triangleright x \Rightarrow AB \triangleright z)$
 
-### C. Theorems
+### Theorems
+
+#### Lemmas
+
+1. $\forall A\in L\ \forall x,y \in T: A\triangleright xy \Rightarrow \texttt{len}(A)>1$
+   - **Proof**. Assume $A\triangleright xy$.
+   - Then by (P1), $A=BC$ for some $B,C\in L$ where $B\triangleright x$ and $C\triangleright y$.
+   - Hence $\texttt{len}(A) = \texttt{len}(B) + \texttt{len}(C) \geq 2$.
+2. $\forall A\in L: \texttt{len}(A)=n \Rightarrow \exists x\in T : \texttt{len}(x)=n\ \&\ A\triangleright x$
+   - **Proof** by induction on length.
+   - Assume $\texttt{len}(A)=1$.
+     - Then by
+   - Assume the theorem is true for $\texttt{len}(A)\leq n$.
+
+#### Lambek's Theorems
 
 1. $\forall x \in T: x \rightarrow x$
-  - **Proof**. Note that, by (B5), $x \rightarrow x \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright x$.
-  - This is true since $p\Rightarrow p$ is true for any proposition $p$.
+   - **Proof**. Note that, by (A1), $x \rightarrow x \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright x$.
+   - This is true since $p\Rightarrow p$ is true for any proposition $p$.
 
 2. $\forall x, y, z \in T: x(yz) \rightleftarrows (xy)z$
-  - **Proof**. $(\rightarrow)$
-    - By (B5), $x(yz) \rightarrow (xy)z$ if and only if $\forall A \in L: A \triangleright x(yz) \Rightarrow A \triangleright (xy)z$.
-    - Suppose $A \triangleright x(yz)$. Then by (B1), $A=BC$ for some $B,C$ where $B\triangleright x$ and $C \triangleright yz$.
-    - Again by (B1), get that $C=DE$ for some $D,E$ where $D\triangleright y$ and $E \triangleright z$.
-    - Since $C=DE$ and $C\triangleright yz$, conclude $DE\triangleright yz$.
-    - By (B2), conclude that $D\triangleright y$ and $E\triangleright z$.
-    - $A = BDE$ has been established. Since concatenation is associative, $BDE = B(DE)$.
-    - Since $A \triangleright x(yz)$, conclude $B(DE) \triangleright x(yz)$. By (B2), $B \triangleright x$.
-    - Since $B \triangleright x$ and $D \triangleright y$, conclude $BD\triangleright xy$ by (B2).
-    - Again by (B2), conclude $(BD)E \triangleright (xy)z$.
-    - Since $A=B(DE)=(BD)E$, conclude $A\triangleright (xy)z$.
-  - Now we prove ($\leftarrow$).
-    - By (B5), $(xy)z \rightarrow x(yz)$ if and only if $\forall A \in L: A \triangleright (xy)z \Rightarrow A \triangleright x(yz)$.
-    - Suppose $A \triangleright (xy)z$. Then by (B1), $A=BC$ for some $B,C$ where $B\triangleright (xy)$ and $C \triangleright z$.
-    - Again by (B1), get that $B=DE$ for some $D,E$ where $D\triangleright x$ and $E \triangleright y$.
-    - Since $B=DE$ and $B\triangleright xy$, conclude $DE\triangleright xy$.
-    - By (B2), conclude that $D\triangleright x$ and $E\triangleright y$.
-    - $A = DEC$ has been established. Since concatenation is associative, $DEC = (DE)C$.
-    - Since $A \triangleright (xy)z$, conclude $(DE)C \triangleright (xy)z$. By (B2), $C \triangleright z$.
-    - Since $E \triangleright y$ and $C \triangleright z$, conclude $EC\triangleright yz$ by (B2).
-    - Again by (B2), conclude $D(EC) \triangleright x(yz)$.
-    - Since $A=(DE)C=D(EC)$, conclude $A\triangleright x(yz)$.
+   - **Proof**. $(\rightarrow)$
+     - By (A1), $x(yz) \rightarrow (xy)z$ if and only if $\forall A \in L: A \triangleright x(yz) \Rightarrow A \triangleright (xy)z$.
+     - Suppose $A \triangleright x(yz)$. Then by (P1), $A=BC$ for some $B,C$ where $B\triangleright x$ and $C \triangleright yz$.
+     - Again by (P1), get that $C=DE$ for some $D,E$ where $D\triangleright y$ and $E \triangleright z$.
+     - Since $C=DE$ and $C\triangleright yz$, conclude $DE\triangleright yz$.
+     - By (P2), conclude that $D\triangleright y$ and $E\triangleright z$.
+     - $A = BDE$ has been established. Since concatenation is associative, $BDE = B(DE)$.
+     - Since $A \triangleright x(yz)$, conclude $B(DE) \triangleright x(yz)$. By (P2), $B \triangleright x$.
+     - Since $B \triangleright x$ and $D \triangleright y$, conclude $BD\triangleright xy$ by (P2).
+     - Again by (P2), conclude $(BD)E \triangleright (xy)z$.
+     - Since $A=B(DE)=(BD)E$, conclude $A\triangleright (xy)z$.
+   - Now we prove ($\leftarrow$).
+     - By (A1), $(xy)z \rightarrow x(yz)$ if and only if $\forall A \in L: A \triangleright (xy)z \Rightarrow A \triangleright x(yz)$.
+     - Suppose $A \triangleright (xy)z$. Then by (P1), $A=BC$ for some $B,C$ where $B\triangleright (xy)$ and $C \triangleright z$.
+     - Again by (P1), get that $B=DE$ for some $D,E$ where $D\triangleright x$ and $E \triangleright y$.
+     - Since $B=DE$ and $B\triangleright xy$, conclude $DE\triangleright xy$.
+     - By (P2), conclude that $D\triangleright x$ and $E\triangleright y$.
+     - $A = DEC$ has been established. Since concatenation is associative, $DEC = (DE)C$.
+     - Since $A \triangleright (xy)z$, conclude $(DE)C \triangleright (xy)z$. By (P2), $C \triangleright z$.
+     - Since $E \triangleright y$ and $C \triangleright z$, conclude $EC\triangleright yz$ by (P2).
+     - Again by (P2), conclude $D(EC) \triangleright x(yz)$.
+     - Since $A=(DE)C=D(EC)$, conclude $A\triangleright x(yz)$.
 
 3. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow x \rightarrow z/y$
   - **Proof**. $(\Rightarrow)$
     - Assume $xy \rightarrow z$.
-    - Assume $A \triangleright xy$. Then by (B1), $A=BC$ for some $B,C$ where $B \triangleright x$ and $B \triangleright y$.
-    - Since $BC \triangleright xy$ and $xy \rightarrow z$, by (B5) conclude $BC \triangleright z$.
-    - Since $C \triangleright y$ and $BC \triangleright z$, by (B3) conclude $B\triangleright z/y$.
-    - ...?
+    - Let $A\triangleright x$.
+    - ...
   - Now we prove ($\Leftarrow$).
-    - stub
+    - Assume $x\rightarrow z/y$.
+    - Let $A\triangleright xy$.
+    - By lemma 1, $\texttt{len}(A) > 1$. So write $A=BC$, where $B\triangleright x$ and $C\triangleright y$.
+    - Since $x\rightarrow z/y$, conclude $B\triangleright z/y$ by (A1).
+    - Since $B\triangleright z/y$ and $C\triangleright y$, conclude $BC\triangleright z$ by (S1).
+    - Since $A=BC$, conclude $A\triangleright z$.
+    - Since $A$ only had the condition $A\triangleright xy$, conclude $xy\rightarrow z$.
 
 4. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow y \rightarrow x\backslash y$
   - **Proof**.
