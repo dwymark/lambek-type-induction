@@ -33,24 +33,62 @@ $$
 
 ## Formal Definition
 
-### A. Definitions
+### Definitions
+
+#### Foundational Sets and Relations
 
 1. Let $X$ be a set of strings, called the *lexicon*. Elements of $X$ are called *lexemes*.
 2. Let $X^{\infty}$ be the collection of all finite, non-empty sequences of elements from $X$.
 3. Let $L\subseteq X^{\infty}$ be non-empty. $L$ is called the *language*.
 4. Let $P$ be a non-empty set.  Elements of $P$ are called *primitive types*.
 5. Let $T \supset P$. Elements of $T$ are called *types*, and they are either of the form $a$, $a/b$, $a\backslash b$, or $ab$ (or $\ a\cdot b$) where $a,b\in T$.
-6. Let $\triangleright \in L\times T$ be such that $\forall p \in L \exist t \in T: p \triangleright t$. When $p \triangleright t$, we say $t$ is a *type* of $p$.
-7. Let **LC** = $\langle L, T, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
+6. Let $\triangleright \in L\times T$ be such that $\forall p \in L\ \exist t \in T: p \triangleright t$. When $p \triangleright t$, we say $t$ is a *type* of $p$.
+7.  Let **LC** = $\langle L, T, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
 
-### B. Axioms
+#### Arrow Relations
+1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright y$
+2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
 
-1. $\forall A\in L\ \forall x,y \in T : A\triangleright xy \Rightarrow ( \exists B,C\in L : A=BC\ \&\ B\triangleright x \ \&\ C \triangleright y)$
-2. $\forall A, B \in L\ \forall x, y \in T : A \triangleright x\ \& \ B\triangleright y \Leftrightarrow AB \triangleright xy$
-3. $\forall A \in L\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in L: B \triangleright y \Rightarrow AB \triangleright z)$
-4. $\forall B \in L\ \forall x, z \in T :  B \triangleright x\backslash z \Leftrightarrow (\forall A \in L: A \triangleright x \Rightarrow AB \triangleright z)$
-5. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright y$
-6. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
+#### Auxiliary Functions
+1.  Let $\texttt{len}: L\ \dot\cup\ T \rightarrow \mathbb{N}$, where:
+  1. For all lexemes $W\in X$, define $\texttt{len}(W) = 1$.
+  2. For all expressions $A, B\in L$, define $\texttt{len}(AB) = \texttt{len}(A) + \texttt{len}(B)$.
+  3. For all types $x\in T$,
+    1. If $x=y\cdot z$ for some $y,z\in T$ then $\texttt{len}(x) = \texttt{len}(y) + \texttt{len}(z)$;
+    2. Otherwise, $len(x)=1$.
+
+#### Well-Definedness
+- Note that (D7) needs a proof to establish that it is a true function.
+  - **Proof**
+  - First, need to establish that $\texttt{len}$ is well-defined on $L$.
+    - For all $W\in X^1$, $\texttt{len}(W)=1$ by definition, and hence is well-defined.
+    - Suppose $\texttt{len}$ is well-defined on all $X^i$ where $i\leq n$ for some $n\in\mathbb{N}$.
+      - Consider $A\in X^{n+1}$. Note that $A=A_0A_1\ldots A_n$.
+      - Choose $m\in\mathbb{N}$ such that $0<m<n$.
+      - Then $A=(A_0\ldots A_m)(A_{m+1}\ldots A_n)$.
+      - Note that $(A_0\ldots A_m)\in X^{m+1}$ and $(A_{m+1}\ldots A_n)\in X^{n-m}$.
+      - By inductive hypothesis, $\texttt{len}$ is well-defined on $X^{m+1}$ and $X^{n-m}$.
+      - Since $\texttt{len}(A) = \texttt{len}(A_0\ldots A_m) + \texttt{len}(A_{m+1}\ldots A_n)$ by definition, see that $\texttt{len}$ is well-defined on $X^{n+1}$.
+  - Then we need to establish the same for $T$.
+    - stub
+
+### Axioms
+
+#### (P) Product Axioms
+
+For all expressions $A,B\in L$ and all types $x,y \in T$,
+
+1. $A\triangleright xy \Rightarrow ( \exists C,D\in L : A=CD\ \&\ C\triangleright x \ \&\ D \triangleright y)$
+2. $A \triangleright x\ \& \ B\triangleright y \Rightarrow AB \triangleright xy$
+
+For all lexemes $W\in X$,
+
+3. $\exists x\in T: \texttt{len}(x)=1\ \&\ W\triangleright x$
+
+#### (S) Slash Axioms
+
+1. $\forall A \in L\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in L: B \triangleright y \Rightarrow AB \triangleright z)$
+2. $\forall B \in L\ \forall x, z \in T :  B \triangleright x\backslash z \Leftrightarrow (\forall A \in L: A \triangleright x \Rightarrow AB \triangleright z)$
 
 ### C. Theorems
 
