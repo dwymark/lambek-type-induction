@@ -35,39 +35,39 @@ $$
 
 ### Definitions
 
-#### Foundational Sets and Relations
+#### Foundational Notions
 
 1. Let $X$ be a set of strings, called the *lexicon*. Elements of $X$ are called *lexemes*.
-2. Let $X^{\infty}$ be the collection of all finite, non-empty sequences of elements from $X$.
-3. Let $L\subseteq X^{\infty}$ be non-empty. $L$ is called the *language*. Elements of $L\setminus X$ are called *phrases*.
-4. Let $P$ be a non-empty set.  Elements of $P$ are called *primitive types*.
-5. Let $T \supset P$. Elements of $T$ are called *types*, and they are either of the form $a$, $a/b$, $a\backslash b$, or $ab$ (or $\ a\cdot b$) where $a,b\in T$.
-6. Let $\triangleright \in L\times T$. When $p \triangleright t$, we say $t$ is a *type* of $p$. The following conditions apply to the $\triangleright$ relation:
-   1. All phrases have at least one type: $\forall A \in L\ \exist x \in T: A \triangleright x$.
-   2. Every primitive type is instantiated at least once: $\forall p\in P\ \exists A \in L: A\triangleright p$
-7. Let **LC** = $\langle L, T, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
+2. Let $X^+$ be the collection of all finite, non-empty lexeme sequences.
+3. For all $A,B\in X^+$, where $A=\langle A_0, \ldots, A_n \rangle$ and $B=\langle B_0, \ldots, B_m \rangle$, define the *concatenation* $AB$ as the sequence $\langle A_0, \ldots, A_n, B_0, \ldots, B_m \rangle$.
+4. Let $L\subseteq X^+$ be non-empty. $L$ is called the *language*. Elements of $L$ are called *sentences*.
+5. Let $P$ be a non-empty set. Elements of $P$ are called *primitive types*.
+6. Let $s\in P$ be called the "sentence type".
+7. Let $T \supset P$. Elements of $T$ are called *types*, and they are either of the form $a$, $a/b$, $a\backslash b$, or $ab$ (or $\ a\cdot b$) where $a,b\in T$.
+8. Let $\triangleright \in X^+\times T$. When $p \triangleright t$, we say $t$ is a *type* of $p$.
+9. Let **LC** = $\langle X, L, T, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
 
-#### Arrow Relations
-1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright y$
+#### (A) Arrow Relations
+1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
 2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
 
-#### Auxiliary Functions
+#### Length Function
 
-It is convenient to have a notion of "product length", i.e. how many times does the $\cdot$ operator occur in a type, or how many lexemes are there in a phrase.
+It is convenient to have a notion of "product length", i.e. how many times does the $\cdot$ operator occur in a type, or how many lexemes are there in a sentence.
 
-1. Let $\texttt{len}: L\ \dot\cup\ T \rightarrow \mathbb{N}$, where:
+1. Let $\texttt{len}: X^+\ \dot\cup\ T \rightarrow \mathbb{N}$, where:
    1. For all lexemes $W\in X$, define $\texttt{len}(W) = 1$.
-   2. For all expressions $A, B\in L$, define $\texttt{len}(AB) = \texttt{len}(A) + \texttt{len}(B)$.
+   2. For all lexeme sequences $A, B\in X^+$, define $\texttt{len}(AB) = \texttt{len}(A) + \texttt{len}(B)$.
    3. For all types $x\in T$,
       1. If $x=y\cdot z$ for some $y,z\in T$ then $\texttt{len}(x) = \texttt{len}(y) + \texttt{len}(z)$;
       2. Otherwise, $len(x)=1$.
 
 **Proof** that $\texttt{len}$ is a well defined function:
-- First, need to establish that $\texttt{len}$ is well defined on $L$.
-  - For all $W\in X^1$, $\texttt{len}(W)=1$ by definition, and hence is well defined.
+- First, need to establish that $\texttt{len}$ is well defined on $X^+$.
+  - For all $W\in X$, $\texttt{len}(W)=1$ by definition, and hence is well defined.
   - Suppose $\texttt{len}$ is well defined on all $X^i$ where $i\leq n$ for some $n\in\mathbb{N}$.
     - Consider $A\in X^{n+1}$. Note that $A=A_0A_1\ldots A_n$.
-    - Choose $m\in\mathbb{N}$ such that $0<m<n$.
+    - Choose $m\in\mathbb{N}$ such that $0<m\leq n$.
     - Then $A=(A_0\ldots A_m)(A_{m+1}\ldots A_n)$.
     - Note that $(A_0\ldots A_m)\in X^{m+1}$ and $(A_{m+1}\ldots A_n)\in X^{n-m}$.
     - By inductive hypothesis, $\texttt{len}$ is well defined on $X^{m+1}$ and $X^{n-m}$.
@@ -77,11 +77,22 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
 ### Axioms
 
+#### (T) Type Axioms
+
+1. All lexeme sequences have at least one type.
+
+   $\forall A \in X^+\ \exist x \in T: A \triangleright x$.
+
+
+2. Every primitive type is instantiated at least once in the lexicon.
+
+   $\forall p\in P\ \exists W \in X: W\triangleright p$
+
 #### (P) Product Axioms
 
-For all expressions $A,B\in L$ and all types $x,y \in T$,
+For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
 
-1. $A\triangleright xy \Rightarrow ( \exists C,D\in L : A=CD\ \&\ C\triangleright x \ \&\ D \triangleright y)$
+1. $A\triangleright xy \Rightarrow ( \exists C,D\in X^+ : A=CD\ \&\ C\triangleright x \ \&\ D \triangleright y)$
 2. $A \triangleright x\ \& \ B\triangleright y \Rightarrow AB \triangleright xy$
 
 For all lexemes $W\in X$,
@@ -90,21 +101,21 @@ For all lexemes $W\in X$,
 
 #### (S) Slash Axioms
 
-1. $\forall A \in L\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in L: B \triangleright y \Rightarrow AB \triangleright z)$
-2. $\forall B \in L\ \forall x, z \in T :  B \triangleright x\backslash z \Leftrightarrow (\forall A \in L: A \triangleright x \Rightarrow AB \triangleright z)$
+1. $\forall A \in X^+\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in X^+: B \triangleright y \Rightarrow AB \triangleright z)$
+2. $\forall B \in X^+\ \forall x, z \in T :  B \triangleright x\backslash z \Leftrightarrow (\forall A \in X^+: A \triangleright x \Rightarrow AB \triangleright z)$
 
 ### Theorems
 
 #### Lemmas
 
-1. $\forall A\in L\ \forall x,y \in T: A\triangleright xy \Rightarrow \texttt{len}(A)>1$
+1. $\forall A\in X^+\ \forall x,y \in T: A\triangleright xy \Rightarrow \texttt{len}(A)>1$
    - **Proof**. Assume $A\triangleright xy$.
-   - Then by (P1), $A=BC$ for some $B,C\in L$ where $B\triangleright x$ and $C\triangleright y$.
+   - Then by (P1), $A=BC$ for some $B,C\in X^+$ where $B\triangleright x$ and $C\triangleright y$.
    - Hence $\texttt{len}(A) = \texttt{len}(B) + \texttt{len}(C) \geq 2$.
-2. $\forall A\in L: \texttt{len}(A)=n \Rightarrow \exists x\in T : \texttt{len}(x)=n\ \&\ A\triangleright x$
+2. $\forall A\in X^+: \texttt{len}(A)=n \Rightarrow \exists x\in T : \texttt{len}(x)=n\ \&\ A\triangleright x$
    - **Proof** by induction on length.
    - Assume $\texttt{len}(A)=1$.
-     - Then by
+     - Then by ...
    - Assume the theorem is true for $\texttt{len}(A)\leq n$.
 
 #### Lambek's Theorems
