@@ -48,6 +48,9 @@ $$
 9. Let **LC** = $\langle X, L, T, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
 
 #### (A) Arrow Relations
+
+There is an implication relation $\rightarrow$ on types that connects the logic of the types to the structure of the language. Th
+
 1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
 2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
 
@@ -55,23 +58,23 @@ $$
 
 It is convenient to have a notion of "product length", i.e. how many times does the $\cdot$ operator occur in a type, or how many lexemes are there in a sentence.
 
-1. Let $\texttt{len}: X^+\ \dot\cup\ T \rightarrow \mathbb{N}$, where:
-   1. For all lexemes $W\in X$, define $\texttt{len}(W) = 1$.
-   2. For all lexeme sequences $A, B\in X^+$, define $\texttt{len}(AB) = \texttt{len}(A) + \texttt{len}(B)$.
+1. Let $\mathtt{len}: X^{+}\ \cup\ T \rightarrow \mathbb{N}$, where:
+   1. For all lexemes $W\in X$, define $\mathtt{len}(W) = 1$.
+   2. For all lexeme sequences $A, B\in X^+$, define $\mathtt{len}(AB) = \mathtt{len}(A) + \mathtt{len}(B)$.
    3. For all types $x\in T$,
-      1. If $x=y\cdot z$ for some $y,z\in T$ then $\texttt{len}(x) = \texttt{len}(y) + \texttt{len}(z)$;
-      2. Otherwise, $len(x)=1$.
+      1. If $x=y\cdot z$ for some $y,z\in T$ then $\mathtt{len}(x) = \mathtt{len}(y) + \mathtt{len}(z)$;
+      2. Otherwise, $\mathtt{len}(x)=1$.
 
-**Proof** that $\texttt{len}$ is a well defined function:
-- First, need to establish that $\texttt{len}$ is well defined on $X^+$.
-  - For all $W\in X$, $\texttt{len}(W)=1$ by definition, and hence is well defined.
-  - Suppose $\texttt{len}$ is well defined on all $X^i$ where $i\leq n$ for some $n\in\mathbb{N}$.
+**Proof** that $\mathtt{len}$ is a well defined function:
+- First, need to establish that $\mathtt{len}$ is well defined on $X^+$.
+  - For all $W\in X$, $\mathtt{len}(W)=1$ by definition, and hence is well defined.
+  - Suppose $\mathtt{len}$ is well defined on all $X^i$ where $i\leq n$ for some $n\in\mathbb{N}$.
     - Consider $A\in X^{n+1}$. Note that $A=A_0A_1\ldots A_n$.
     - Choose $m\in\mathbb{N}$ such that $0<m\leq n$.
     - Then $A=(A_0\ldots A_m)(A_{m+1}\ldots A_n)$.
     - Note that $(A_0\ldots A_m)\in X^{m+1}$ and $(A_{m+1}\ldots A_n)\in X^{n-m}$.
-    - By inductive hypothesis, $\texttt{len}$ is well defined on $X^{m+1}$ and $X^{n-m}$.
-    - Since $\texttt{len}(A) = \texttt{len}(A_0\ldots A_m) + \texttt{len}(A_{m+1}\ldots A_n)$ by definition, see that $\texttt{len}$ is well defined on $X^{n+1}$.
+    - By inductive hypothesis, $\mathtt{len}$ is well defined on $X^{m+1}$ and $X^{n-m}$.
+    - Since $\mathtt{len}(A) = \mathtt{len}(A_0\ldots A_m) + \mathtt{len}(A_{m+1}\ldots A_n)$ by definition, see that $\mathtt{len}$ is well defined on $X^{n+1}$.
 - Then we need to establish the same for $T$.
   - Clearly true, lacking convenient notation for proof ...
 
@@ -79,14 +82,14 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
 #### (T) Type Axioms
 
-1. All lexeme sequences have at least one type.
-
-   $\forall A \in X^+\ \exist x \in T: A \triangleright x$.
-
-
-2. Every primitive type is instantiated at least once in the lexicon.
+1. Every primitive type is instantiated at least once in the lexicon.
 
    $\forall p\in P\ \exists W \in X: W\triangleright p$
+
+2. Every lexeme has at least one type of length 1.
+
+   $\forall W\in X\ \exists x\in T: \mathtt{len}(x)=1\ \&\ W\triangleright x$
+
 
 #### (P) Product Axioms
 
@@ -95,10 +98,6 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
 1. $A\triangleright xy \Rightarrow ( \exists C,D\in X^+ : A=CD\ \&\ C\triangleright x \ \&\ D \triangleright y)$
 2. $A \triangleright x\ \& \ B\triangleright y \Rightarrow AB \triangleright xy$
 
-For all lexemes $W\in X$,
-
-3. $\exists x\in T: \texttt{len}(x)=1\ \&\ W\triangleright x$
-
 #### (S) Slash Axioms
 
 1. $\forall A \in X^+\ \forall y, z \in T : A \triangleright z/y \Leftrightarrow (\forall B \in X^+: B \triangleright y \Rightarrow AB \triangleright z)$
@@ -106,17 +105,38 @@ For all lexemes $W\in X$,
 
 ### Theorems
 
-#### Lemmas
+#### (L) Lemmas
 
-1. $\forall A\in X^+\ \forall x,y \in T: A\triangleright xy \Rightarrow \texttt{len}(A)>1$
+
+1. Product typed lexeme sequences are never of length one. <!--Note, this can probably be strengthened to len(A)=n.-->
+
+   $\forall A\in X^+\ \forall x,y \in T: A\triangleright xy \Rightarrow \mathtt{len}(A)>1$
+
    - **Proof**. Assume $A\triangleright xy$.
    - Then by (P1), $A=BC$ for some $B,C\in X^+$ where $B\triangleright x$ and $C\triangleright y$.
-   - Hence $\texttt{len}(A) = \texttt{len}(B) + \texttt{len}(C) \geq 2$.
-2. $\forall A\in X^+: \texttt{len}(A)=n \Rightarrow \exists x\in T : \texttt{len}(x)=n\ \&\ A\triangleright x$
+   - Hence $\mathtt{len}(A) = \mathtt{len}(B) + \mathtt{len}(C) \geq 2$.
+
+2. All lexeme sequences of length $n$ have a type of length $n$.
+
+   $\forall A\in X^+: \mathtt{len}(A)=n \Rightarrow \exists x\in T : \mathtt{len}(x)=n\ \&\ A\triangleright x$
+
    - **Proof** by induction on length.
-   - Assume $\texttt{len}(A)=1$.
-     - Then by ...
-   - Assume the theorem is true for $\texttt{len}(A)\leq n$.
+   - Assume $\mathtt{len}(A)=1$.
+     - Then $A\in X$ by definition of $\mathtt{len}$.
+     - Hence by (T2), $A\triangleright x$ for some $x\in T$ where $\mathtt{len}(x)=1$.
+   - Assume the theorem is true for $\mathtt{len}(A) = n$.
+     - Let $A\in X^T$ be such that $\mathtt{len}(A)=n+1$.
+     - Hence $A=A_0\cdots A_n=(A_0\cdots A_{n-1})\cdot A_n$.
+     - By inductive hypothesis, $(A_0\cdots A_{n-1}) \triangleright x$ for some $x\in T$ such that $\mathtt{len}(x)=n$.
+     - By (T2), $A_n \triangleright y$ for some $y\in T$ where $\mathtt{len}(x)=1$.
+     - Hence $A=(A_0\cdots A_{n-1})\cdot A_n\triangleright xy$ by (P2).
+     - By definition, $\mathtt{len}(xy)=\mathtt{len}(x)+\mathtt{len}(y)=n+1$.
+
+3. All lexeme sequences have at least one type.
+
+   $\forall A \in X^+\ \exists x \in T: A \triangleright x$.
+
+   - **Proof**. Follows immediately from (L2).
 
 #### Lambek's Theorems
 
@@ -156,7 +176,7 @@ For all lexemes $W\in X$,
   - Now we prove ($\Leftarrow$).
     - Assume $x\rightarrow z/y$.
     - Let $A\triangleright xy$.
-    - By lemma 1, $\texttt{len}(A) > 1$. So write $A=BC$, where $B\triangleright x$ and $C\triangleright y$.
+    - By lemma 1, $\mathtt{len}(A) > 1$. So write $A=BC$, where $B\triangleright x$ and $C\triangleright y$.
     - Since $x\rightarrow z/y$, conclude $B\triangleright z/y$ by (A1).
     - Since $B\triangleright z/y$ and $C\triangleright y$, conclude $BC\triangleright z$ by (S1).
     - Since $A=BC$, conclude $A\triangleright z$.
