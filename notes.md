@@ -204,8 +204,17 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
 
 5. $\forall x, y \in T: x\rightarrow y \ \&\ y\rightarrow z \Rightarrow x \rightarrow z$
   - **Proof**.
-    - stub
+    - Assume $x\rightarrow y$ and $y\rightarrow z$.
+    - Let $A\triangleright x$.
+    - Conclude $A\triangleright y$ by (A1).
+    - Conclude $A\triangleright z$ by another application of (A1).
+    - Hence $x\rightarrow z$.
 
+## Miscellaneous Notes
+
+1. By (L2),  all lexeme sequences of length $n$ have a type of length $n$. It does not appear to be the case that all types of length $n$ which are instantiated are necessarily instantiated by some expression of length $n$. I.e., seems you cannot prove that
+
+   $\forall x\in T: \mathtt{len}(x)=n \ \&\ (\exists A\in X^+: A\triangleright x) \Rightarrow \exists A\in X^+ : \mathtt{len}(A)=n\ \&\ A\triangleright x$
 
 ## References
 - "The Mathematics of Sentence Structure" by Joachim Lambek, 1958
