@@ -37,14 +37,14 @@ $$
 
 #### Foundational Notions
 
-1. Let $X$ be a set of strings, called the *lexicon*. Elements of $X$ are called *lexemes*.
-2. Let $X^+$ be the collection of all finite, non-empty lexeme sequences.
-3. For all $A,B\in X^+$, where $A=\langle A_0, \ldots, A_n \rangle$ and $B=\langle B_0, \ldots, B_m \rangle$, define the *concatenation* $AB$ as the sequence $\langle A_0, \ldots, A_n, B_0, \ldots, B_m \rangle$.
-4. Let $L\subseteq X^+$ be non-empty. $L$ is called the *language*. Elements of $L$ are called *sentences*.
-5. Let $P$ be a non-empty set. Elements of $P$ are called *primitive types*.
-6. Let $s\in P$ be called the "sentence type".
-7. Let $T \supset P$. Elements of $T$ are called *types*, and they are either of the form $a$, $a/b$, $a\backslash b$, or $ab$ (or $\ a\cdot b$) where $a,b\in T$.
-8. Let $\triangleright \in X^+\times T$. When $p \triangleright t$, we say $t$ is a *type* of $p$.
+1. Let $P$ be a non-empty set. Elements of $P$ are called *primitive types*.
+2. Let $T \supset P$. Elements of $T$ are called *types*, and they are either of the form $a$, $a/b$, $a\backslash b$, or $ab$ (or $\ a\cdot b$) where $a,b\in T$.
+3. Let $s\in P$ be called the "sentence type".
+4. Let $X$ be a set of strings, called the *lexicon*. Elements of $X$ are called *lexemes*.
+5. Let $X^+$ be the collection of all finite, non-empty lexeme sequences.
+6. For all $A,B\in X^+$, where $A=\langle A_0, \ldots, A_n \rangle$ and $B=\langle B_0, \ldots, B_m \rangle$, define the *concatenation* $AB$ as the sequence $\langle A_0, \ldots, A_n, B_0, \ldots, B_m \rangle$.
+7. Let $\triangleright \in X^+\times T$. When $p \triangleright t$, we say $t$ is a *type* of $p$.
+8. Let $L = \{A \triangleright s : A\in X^+ \}$ be non-empty. $L$ is called the *language*. Elements of $L$ are called *sentences*.
 9. Let **LC** = $\langle X, L, T, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
 
 #### (A) Arrow Relations
