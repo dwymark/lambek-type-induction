@@ -49,7 +49,7 @@ $$
 
 #### (A) Arrow Relations
 
-There is an implication relation $\rightarrow$ on types that connects the logic of the types to the structure of the language. Th
+There is an implication relation $\rightarrow$ on types that connects the logic of the types to the structure of the language.
 
 1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
 2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
@@ -168,19 +168,22 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
      - Again by (P2), conclude $D(EC) \triangleright x(yz)$.
      - Since $A=(DE)C=D(EC)$, conclude $A\triangleright x(yz)$.
 
-3. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow x \rightarrow z/y$
+3. $\forall x, y, z \in T: xy \rightarrow z \Leftrightarrow x \rightarrow z/y$
   - **Proof**. $(\Rightarrow)$
     - Assume $xy \rightarrow z$.
-    - Let $A\triangleright x$.
-    - ...
+    - Let $A\triangleright x$ and $B\triangleright y$.
+    - Then $AB\triangleright xy$ by (P2).
+    - Hence $AB\triangleright z$ by (A1).
+    - Since $B\triangleright y$ and $AB\triangleright z$, conclude $A\triangleright z/y$ by (S1).
+    - Hence $x\rightarrow z/y$.
   - Now we prove ($\Leftarrow$).
     - Assume $x\rightarrow z/y$.
     - Let $A\triangleright xy$.
-    - By lemma 1, $\mathtt{len}(A) > 1$. So write $A=BC$, where $B\triangleright x$ and $C\triangleright y$.
-    - Since $x\rightarrow z/y$, conclude $B\triangleright z/y$ by (A1).
+    - By (P1), $A=BC$ for some $B,C$ such that $B\triangleright x$ and $C\triangleright y$.
+    - By (A1), $B\triangleright z/y$.
     - Since $B\triangleright z/y$ and $C\triangleright y$, conclude $BC\triangleright z$ by (S1).
-    - Since $A=BC$, conclude $A\triangleright z$.
-    - Since $A$ only had the condition $A\triangleright xy$, conclude $xy\rightarrow z$.
+    - Since $A=C$, conclude $A\triangleright z$.
+    - Hence $xy\rightarrow z$.
 
 4. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow y \rightarrow x\backslash y$
   - **Proof**.
