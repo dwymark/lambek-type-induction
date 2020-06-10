@@ -180,14 +180,27 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
     - Assume $x\rightarrow z/y$.
     - Let $A\triangleright xy$.
     - By (P1), $A=BC$ for some $B,C$ such that $B\triangleright x$ and $C\triangleright y$.
-    - By (A1), $B\triangleright z/y$.
+    - Since $x\rightarrow z/y$, conclude $B\triangleright z/y$ by (A1).
     - Since $B\triangleright z/y$ and $C\triangleright y$, conclude $BC\triangleright z$ by (S1).
-    - Since $A=C$, conclude $A\triangleright z$.
+    - Since $A=BC$, conclude $A\triangleright z$.
     - Hence $xy\rightarrow z$.
 
-4. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow y \rightarrow x\backslash y$
-  - **Proof**.
-    - stub
+4. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow y \rightarrow x\backslash z$
+  - **Proof**. $(\Rightarrow)$
+    - Assume $xy \rightarrow z$.
+    - Let $A\triangleright x$ and $B\triangleright y$.
+    - Then $AB\triangleright xy$ by (P2).
+    - Hence $AB\triangleright z$ by (A1).
+    - Since $A\triangleright x$ and $AB\triangleright z$, conclude $B\triangleright x\backslash z$ by (S2).
+    - Hence $y\rightarrow x\backslash z$.
+  - Now we prove ($\Leftarrow$).
+    - Assume $y\rightarrow x\backslash z$.
+    - Let $A\triangleright xy$.
+    - By (P1), $A=BC$ for some $B,C$ such that $B\triangleright x$ and $C\triangleright y$.
+    - Since $x\rightarrow x\backslash z$, conclude $C\triangleright x\backslash z$ by (A1).
+    - Since $C\triangleright x\backslash z$ and $B\triangleright x$, conclude $BC\triangleright z$ by (S2).
+    - Since $A=BC$, conclude $A\triangleright z$.
+    - Hence $xy\rightarrow z$.
 
 5. $\forall x, y \in T: x\rightarrow y \ \&\ y\rightarrow z \Rightarrow x \rightarrow z$
   - **Proof**.
