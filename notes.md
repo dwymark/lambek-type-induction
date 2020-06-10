@@ -40,19 +40,13 @@ $$
 1. Let $P$ be a non-empty set. Elements of $P$ are called *primitive types*.
 2. Let $s\in P$ be called the "sentence type".
 3. Let $T \supset P$. Elements of $T$ are called *types*, and they are either of the form $a$, $a/b$, $a\backslash b$, or $ab$ (or $\ a\cdot b$) where $a,b\in T$.
-4. Let $X$ be a set of strings, called the *lexicon*. Elements of $X$ are called *lexemes*.
-5. Let $X^+$ be the collection of all finite, non-empty lexeme sequences.
-6. For all $A,B\in X^+$, where $A=\langle A_0, \ldots, A_n \rangle$ and $B=\langle B_0, \ldots, B_m \rangle$, define the *concatenation* $AB$ as the sequence $\langle A_0, \ldots, A_n, B_0, \ldots, B_m \rangle$.
-7. Let $\triangleright \in X^+\times T$. When $A \triangleright x$, we say $x$ is a *type* of $A$.
-8. Let $L = \{A \triangleright s : A\in X^+ \}$ be non-empty. $L$ is called the *language*. Elements of $L$ are called *sentences*.
-9. Let **LC** = $\langle X, L, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
-
-#### (A) Arrow Relations
-
-There is an implication relation $\rightarrow$ on types that connects the logic of the types to the structure of the language.
-
-1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
-2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
+4. Let $\rightarrow$ and $\rightleftarrows$ be relations on $T$, i.e. subsets of $T\times T$.
+5. Let $X$ be a set of strings, called the *lexicon*. Elements of $X$ are called *lexemes*.
+6. Let $X^+$ be the collection of all finite, non-empty lexeme sequences.
+7. For all $A,B\in X^+$, where $A=\langle A_0, \ldots, A_n \rangle$ and $B=\langle B_0, \ldots, B_m \rangle$, define the *concatenation* $AB$ as the sequence $\langle A_0, \ldots, A_n, B_0, \ldots, B_m \rangle$.
+8. Let $\triangleright \subseteq X^+\times T$. When $A \triangleright x$, we say $x$ is a *type* of $A$.
+9. Let $L = \{A \triangleright s : A\in X^+ \}$ be non-empty. $L$ is called the *language*. Elements of $L$ are called *sentences*.
+10. Let **LC** = $\langle X, L, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
 
 #### Length Function
 
@@ -90,6 +84,10 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
    $\forall W\in X\ \exists x\in T: \mathtt{len}(x)=1\ \&\ W\triangleright x$
 
+#### (A) Arrow Axioms
+
+1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
+2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
 
 #### (P) Product Axioms
 
