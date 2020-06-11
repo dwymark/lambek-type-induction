@@ -74,6 +74,12 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
 ### Axioms
 
+#### (A) Arrow Axioms
+
+1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
+2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
+
+
 #### (T) Type Axioms
 
 1. Every primitive type is instantiated at least once in the lexicon.
@@ -84,17 +90,15 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
    $\forall W\in X\ \exists x\in T: \mathtt{len}(x)=1\ \&\ W\triangleright x$
 
-#### (A) Arrow Axioms
-
-1. $\forall x,y \in T : x \rightarrow y \Leftrightarrow \forall A \in X^+: A \triangleright x \Rightarrow A \triangleright y$
-2. $\forall x,y \in T : x \rightleftarrows y \Leftrightarrow x\rightarrow y \ \& \ y \rightarrow x$
-
 #### (P) Product Axioms
 
-For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
+1. Every lexeme sequence with a product type is a concatentation of two lexeme sequences.
 
-1. $A\triangleright xy \Rightarrow ( \exists C,D\in X^+ : A=CD\ \&\ C\triangleright x \ \&\ D \triangleright y)$
-2. $A \triangleright x\ \& \ B\triangleright y \Rightarrow AB \triangleright xy$
+   $\forall A\in X^+\ \forall x,y \in T: A\triangleright xy \Rightarrow ( \exists B,C\in X^+ : A=BC\ \&\ B\triangleright x \ \&\ C \triangleright y)$
+
+2. Concatenating two lexeme sequences multiplies their types.
+
+   $\forall A,B\in X^+: A\triangleright x\ \& \ B\triangleright y \Rightarrow AB \triangleright xy$
 
 #### (S) Slash Axioms
 
@@ -103,7 +107,7 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
 
 ### Theorems
 
-#### (L) Lemmas
+#### (LL) Length Lemmas
 
 
 1. Product typed lexeme sequences are never of length one. <!--Note, this can probably be strengthened to len(A)=n.-->
@@ -134,9 +138,9 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
 
    $\forall A \in X^+\ \exists x \in T: A \triangleright x$.
 
-   - **Proof**. Follows immediately from (L2).
+   - **Proof**. Follows immediately from (LL2).
 
-#### Lambek's Theorems
+#### (LB) Lambek's Basic Theorems
 
 1. $\forall x \in T: x \rightarrow x$
    - **Proof**. Note that, by (A1), $x \rightarrow x \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright x$.
@@ -210,7 +214,7 @@ For all lexeme sequences $A,B\in X^+$ and all types $x,y \in T$,
 
 ## Miscellaneous Notes
 
-1. By (L2),  all lexeme sequences of length $n$ have a type of length $n$. It does not appear to be the case that all types of length $n$ which are instantiated are necessarily instantiated by some expression of length $n$. I.e., seems you cannot prove that
+1. By (LL2), all lexeme sequences of length $n$ have a type of length $n$. It does not appear to be the case that all types of length $n$ which are instantiated are necessarily instantiated by some expression of length $n$. I.e., seems you cannot prove that
 
    $\forall x\in T: \mathtt{len}(x)=n \ \&\ (\exists A\in X^+: A\triangleright x) \Rightarrow \exists A\in X^+ : \mathtt{len}(A)=n\ \&\ A\triangleright x$
 
