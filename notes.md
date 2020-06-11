@@ -1,35 +1,10 @@
 # Lambek Calculus
 
-## Syntactic Rules
+In this document, I attempt to formalize the framework presented in Lambek's 1958 "The Mathematics of Sentence Structure". This is done without much in the way of a literature review. Essentially, my goal here is to "fill in the gaps" where Lambek did not provide proofs or formal definitions.
 
-- **Rule 1**: "Simplification"
-$$
-(x/y)y \rightarrow x
-$$
-$$
-y(y\backslash x) \rightarrow x
-$$
+I do, however, modestly extend the framework in my treatment below. My sense is that the value of the multiplication operator on types for linguistic modeling comes from its resemblence to a "merge" operation. This is why I choose to enforce a tight relationship between the product length of a type (i.e. how many times the $\cdot$ operator occurs in the type) and the concatenation length of an expression (i.e. how many lexemes are concatenated to form the expression).
 
-- **Rule 2**: "V-Associativity"
-$$
-(x\backslash y)/z \leftrightarrows x\backslash (y/z)
-$$
-
-- **Rule 3**: "Elimination"
-$$
-(x/y)(y/z) \rightarrow x/z
-$$
-$$
-(x\backslash y)(y\backslash z) \rightarrow x\backslash z
-$$
-
-- **Rule 4**: "Type Raising"
-$$
-x \rightarrow y/(x \backslash y)
-$$
-$$
-x \rightarrow (y / x) \backslash x
-$$
+I am not aware of any sources that model Lambek's original approach in exactly this way. What I have seen more often is a proof-theoretic approach that focuses on the properties of the type system in isolation. The approach I take below is to use set-theoretic definitions and axioms to define a type system coupled with a language.
 
 ## Formal Definition
 
@@ -211,6 +186,38 @@ It is convenient to have a notion of "product length", i.e. how many times does 
     - Conclude $A\triangleright y$ by (A1).
     - Conclude $A\triangleright z$ by another application of (A1).
     - Hence $x\rightarrow z$.
+
+## (LS) Lambek's Syntactic Rules
+
+- **Rule 1**: "Simplification"
+$$
+(x/y)y \rightarrow x
+$$
+$$
+y(y\backslash x) \rightarrow x
+$$
+
+- **Rule 2**: "V-Associativity"
+$$
+(x\backslash y)/z \leftrightarrows x\backslash (y/z)
+$$
+
+- **Rule 3**: "Elimination"
+$$
+(x/y)(y/z) \rightarrow x/z
+$$
+$$
+(x\backslash y)(y\backslash z) \rightarrow x\backslash z
+$$
+
+- **Rule 4**: "Type Raising"
+$$
+x \rightarrow y/(x \backslash y)
+$$
+$$
+x \rightarrow (y / x) \backslash x
+$$
+
 
 ## Miscellaneous Notes
 
