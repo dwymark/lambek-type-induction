@@ -34,18 +34,27 @@ It is convenient to have a notion of "product length", i.e. how many times does 
       1. If $x=y\cdot z$ for some $y,z\in T$ then $\mathtt{len}(x) = \mathtt{len}(y) + \mathtt{len}(z)$;
       2. Otherwise, $\mathtt{len}(x)=1$.
 
-**Proof** that $\mathtt{len}$ is a well defined function:
-- First, need to establish that $\mathtt{len}$ is well defined on $X^+$.
-  - For all $W\in X$, $\mathtt{len}(W)=1$ by definition, and hence is well defined.
-  - Suppose $\mathtt{len}$ is well defined on all $X^i$ where $i\leq n$ for some $n\in\mathbb{N}$.
-    - Consider $A\in X^{n+1}$. Note that $A=A_0A_1\ldots A_n$.
-    - Choose $m\in\mathbb{N}$ such that $0<m\leq n$.
-    - Then $A=(A_0\ldots A_m)(A_{m+1}\ldots A_n)$.
-    - Note that $(A_0\ldots A_m)\in X^{m+1}$ and $(A_{m+1}\ldots A_n)\in X^{n-m}$.
-    - By inductive hypothesis, $\mathtt{len}$ is well defined on $X^{m+1}$ and $X^{n-m}$.
-    - Since $\mathtt{len}(A) = \mathtt{len}(A_0\ldots A_m) + \mathtt{len}(A_{m+1}\ldots A_n)$ by definition, see that $\mathtt{len}$ is well defined on $X^{n+1}$.
-- Then we need to establish the same for $T$.
-  - Clearly true, lacking convenient notation for proof ...
+Note that this definition of $\mathtt{len}$ over types specifically applies to cases where the dot operator is at the highest precedence operator. For instance, $\mathtt{len}((x\cdot y)/z)$ is equal to 1, not 2.
+
+**Theorem**: $\mathtt{len}$ is a well defined function.
+
+<details><summary>Proof (INCOMPLETE)</summary>
+<p>
+
+   - First, need to establish that $\mathtt{len}$ is well defined on $X^+$.
+     - For all $W\in X$, $\mathtt{len}(W)=1$ by definition, and hence is well defined.
+     - Suppose $\mathtt{len}$ is well defined on all $X^i$ where $i\leq n$ for some $n\in\mathbb{N}$.
+       - Consider $A\in X^{n+1}$. Note that $A=A_0A_1\ldots A_n$.
+       - Choose $m\in\mathbb{N}$ such that $0<m\leq n$.
+       - Then $A=(A_0\ldots A_m)(A_{m+1}\ldots A_n)$.
+       - Note that $(A_0\ldots A_m)\in X^{m+1}$ and $(A_{m+1}\ldots A_n)\in X^{n-m}$.
+       - By inductive hypothesis, $\mathtt{len}$ is well defined on $X^{m+1}$ and $X^{n-m}$.
+       - Since $\mathtt{len}(A) = \mathtt{len}(A_0\ldots A_m) + \mathtt{len}(A_{m+1}\ldots A_n)$ by definition, see that $\mathtt{len}$ is well defined on $X^{n+1}$.
+   - Then we need to establish the same for $T$.
+     - Clearly true, lacking convenient notation for proof ...
+</p>
+</details>
+
 
 ### Axioms
 
@@ -57,9 +66,9 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
 #### (T) Type Axioms
 
-1. Every primitive type is instantiated at least once in the lexicon.
+1. Every non-sentence primitive type is instantiated at least once in the lexicon.
 
-   $\forall p\in P\ \exists W \in X: W\triangleright p$
+   $\forall p\in P\ \exists W \in X: p\not=s \Rightarrow W\triangleright p$
 
 2. Every lexeme has at least one type of length 1.
 
@@ -89,15 +98,23 @@ It is convenient to have a notion of "product length", i.e. how many times does 
 
    $\forall A\in X^+\ \forall x,y \in T: A\triangleright xy \Rightarrow \mathtt{len}(A)>1$
 
-   - **Proof**. Assume $A\triangleright xy$.
+<details><summary>Proof</summary>
+<p>
+
+   - Assume $A\triangleright xy$.
    - Then by (P1), $A=BC$ for some $B,C\in X^+$ where $B\triangleright x$ and $C\triangleright y$.
    - Hence $\mathtt{len}(A) = \mathtt{len}(B) + \mathtt{len}(C) \geq 2$.
+</p>
+</details>
 
-2. All lexeme sequences of length $n$ have a type of length $n$.
+1. All lexeme sequences of length $n$ have a type of length $n$.
 
    $\forall A\in X^+: \mathtt{len}(A)=n \Rightarrow \exists x\in T : \mathtt{len}(x)=n\ \&\ A\triangleright x$
 
-   - **Proof** by induction on length.
+<details><summary>Proof</summary>
+<p>
+
+   - Proof by induction on length.
    - Assume $\mathtt{len}(A)=1$.
      - Then $A\in X$ by definition of $\mathtt{len}$.
      - Hence by (T2), $A\triangleright x$ for some $x\in T$ where $\mathtt{len}(x)=1$.
@@ -108,21 +125,39 @@ It is convenient to have a notion of "product length", i.e. how many times does 
      - By (T2), $A_n \triangleright y$ for some $y\in T$ where $\mathtt{len}(x)=1$.
      - Hence $A=(A_0\cdots A_{n-1})\cdot A_n\triangleright xy$ by (P2).
      - By definition, $\mathtt{len}(xy)=\mathtt{len}(x)+\mathtt{len}(y)=n+1$.
+</p>
+</details>
 
 3. All lexeme sequences have at least one type.
 
    $\forall A \in X^+\ \exists x \in T: A \triangleright x$.
 
-   - **Proof**. Follows immediately from (LL2).
+<details><summary>Proof</summary>
+<p>
 
-#### (LB) Lambek's Basic Theorems
+   - Follows immediately from (LL2).
+</p>
+</details>
+
+
+#### (B) Lambek's Basic Theorems
 
 1. $\forall x \in T: x \rightarrow x$
-   - **Proof**. Note that, by (A1), $x \rightarrow x \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright x$.
+
+<details><summary>Proof</summary>
+<p>
+
+   - Note that, by (A1), $x \rightarrow x \Leftrightarrow \forall A \in L: A \triangleright x \Rightarrow A \triangleright x$.
    - This is true since $p\Rightarrow p$ is true for any proposition $p$.
+</p>
+</details>
 
 2. $\forall x, y, z \in T: x(yz) \rightleftarrows (xy)z$
-   - **Proof**. $(\rightarrow)$
+
+<details><summary>Proof</summary>
+<p>
+
+   - $\rightarrow$
      - By (A1), $x(yz) \rightarrow (xy)z$ if and only if $\forall A \in L: A \triangleright x(yz) \Rightarrow A \triangleright (xy)z$.
      - Suppose $A \triangleright x(yz)$. Then by (P1), $A=BC$ for some $B,C$ where $B\triangleright x$ and $C \triangleright yz$.
      - Again by (P1), get that $C=DE$ for some $D,E$ where $D\triangleright y$ and $E \triangleright z$.
@@ -133,7 +168,7 @@ It is convenient to have a notion of "product length", i.e. how many times does 
      - Since $B \triangleright x$ and $D \triangleright y$, conclude $BD\triangleright xy$ by (P2).
      - Again by (P2), conclude $(BD)E \triangleright (xy)z$.
      - Since $A=B(DE)=(BD)E$, conclude $A\triangleright (xy)z$.
-   - Now we prove ($\leftarrow$).
+   - $\leftarrow$.
      - By (A1), $(xy)z \rightarrow x(yz)$ if and only if $\forall A \in L: A \triangleright (xy)z \Rightarrow A \triangleright x(yz)$.
      - Suppose $A \triangleright (xy)z$. Then by (P1), $A=BC$ for some $B,C$ where $B\triangleright (xy)$ and $C \triangleright z$.
      - Again by (P1), get that $B=DE$ for some $D,E$ where $D\triangleright x$ and $E \triangleright y$.
@@ -144,16 +179,22 @@ It is convenient to have a notion of "product length", i.e. how many times does 
      - Since $E \triangleright y$ and $C \triangleright z$, conclude $EC\triangleright yz$ by (P2).
      - Again by (P2), conclude $D(EC) \triangleright x(yz)$.
      - Since $A=(DE)C=D(EC)$, conclude $A\triangleright x(yz)$.
+</p>
+</details>
 
-3. $\forall x, y, z \in T: xy \rightarrow z \Leftrightarrow x \rightarrow z/y$
-  - **Proof**. $(\Rightarrow)$
+1. $\forall x, y, z \in T: xy \rightarrow z \Leftrightarrow x \rightarrow z/y$
+
+<details><summary>Proof</summary>
+<p>
+
+  - $\Rightarrow$
     - Assume $xy \rightarrow z$.
     - Let $A\triangleright x$ and $B\triangleright y$.
     - Then $AB\triangleright xy$ by (P2).
     - Hence $AB\triangleright z$ by (A1).
     - Since $B\triangleright y$ and $AB\triangleright z$, conclude $A\triangleright z/y$ by (S1).
     - Hence $x\rightarrow z/y$.
-  - Now we prove ($\Leftarrow$).
+  - $\Leftarrow$
     - Assume $x\rightarrow z/y$.
     - Let $A\triangleright xy$.
     - By (P1), $A=BC$ for some $B,C$ such that $B\triangleright x$ and $C\triangleright y$.
@@ -161,16 +202,22 @@ It is convenient to have a notion of "product length", i.e. how many times does 
     - Since $B\triangleright z/y$ and $C\triangleright y$, conclude $BC\triangleright z$ by (S1).
     - Since $A=BC$, conclude $A\triangleright z$.
     - Hence $xy\rightarrow z$.
+</p>
+</details>
 
 4. $\forall x, y \in T: xy \rightarrow z \Leftrightarrow y \rightarrow x\backslash z$
-  - **Proof**. $(\Rightarrow)$
+
+<details><summary>Proof</summary>
+<p>
+
+  - $\Rightarrow$
     - Assume $xy \rightarrow z$.
     - Let $A\triangleright x$ and $B\triangleright y$.
     - Then $AB\triangleright xy$ by (P2).
     - Hence $AB\triangleright z$ by (A1).
     - Since $A\triangleright x$ and $AB\triangleright z$, conclude $B\triangleright x\backslash z$ by (S2).
     - Hence $y\rightarrow x\backslash z$.
-  - Now we prove ($\Leftarrow$).
+  - $\Leftarrow$
     - Assume $y\rightarrow x\backslash z$.
     - Let $A\triangleright xy$.
     - By (P1), $A=BC$ for some $B,C$ such that $B\triangleright x$ and $C\triangleright y$.
@@ -178,45 +225,124 @@ It is convenient to have a notion of "product length", i.e. how many times does 
     - Since $C\triangleright x\backslash z$ and $B\triangleright x$, conclude $BC\triangleright z$ by (S2).
     - Since $A=BC$, conclude $A\triangleright z$.
     - Hence $xy\rightarrow z$.
+</p>
+</details>
 
-5. $\forall x, y \in T: x\rightarrow y \ \&\ y\rightarrow z \Rightarrow x \rightarrow z$
-  - **Proof**.
-    - Assume $x\rightarrow y$ and $y\rightarrow z$.
-    - Let $A\triangleright x$.
-    - Conclude $A\triangleright y$ by (A1).
-    - Conclude $A\triangleright z$ by another application of (A1).
-    - Hence $x\rightarrow z$.
+1. $\forall x, y \in T: x\rightarrow y \ \&\ y\rightarrow z \Rightarrow x \rightarrow z$
 
-## (LS) Lambek's Syntactic Rules
+<details><summary>Proof</summary>
+<p>
 
-- **Rule 1**: "Simplification"
-$$
-(x/y)y \rightarrow x
-$$
-$$
-y(y\backslash x) \rightarrow x
-$$
+   - Assume $x\rightarrow y$ and $y\rightarrow z$.
+   - Let $A\triangleright x$.
+   - Conclude $A\triangleright y$ by (A1).
+   - Conclude $A\triangleright z$ by another application of (A1).
+   - Hence $x\rightarrow z$.
+</p>
+</details>
 
-- **Rule 2**: "V-Associativity"
-$$
-(x\backslash y)/z \leftrightarrows x\backslash (y/z)
-$$
 
-- **Rule 3**: "Elimination"
-$$
-(x/y)(y/z) \rightarrow x/z
-$$
-$$
-(x\backslash y)(y\backslash z) \rightarrow x\backslash z
-$$
+## (X) Lambek's Extended Theorems
 
-- **Rule 4**: "Type Raising"
-$$
-x \rightarrow y/(x \backslash y)
-$$
-$$
-x \rightarrow (y / x) \backslash x
-$$
+1. $(x/y)y \rightarrow x$
+
+<details><summary>Proof</summary>
+<p>
+
+   - Assume $A\triangleright (x/y)y$.
+   - By (P1), $A=BC$ where $B\triangleright x/y$ and $C\triangleright y$.
+   - Hence by (S1), $BC\triangleright x$.
+   - Hence $A\triangleright x$, proving $(x/y)y \rightarrow x$.
+</p>
+</details>
+
+
+2. $y(y\backslash x) \rightarrow x$
+
+<details><summary>Proof</summary>
+<p>
+
+   - Assume $A\triangleright y(y\backslash x)$.
+   - By (P1), $A=BC$ where $B\triangleright y$ and $C\triangleright y\backslash x$.
+   - Hence by (S2), $BC\triangleright y$.
+   - Hence $A\triangleright y$, proving $y(y\backslash x) \rightarrow x$.
+</p>
+</details>
+
+3.  $x\rightarrow x'\ \&\ y\rightarrow y' \Rightarrow xy\rightarrow x'y'$
+
+<details><summary>Proof</summary>
+<p>
+
+  - Assume $x\rightarrow x'$ and $y\rightarrow y'$.
+  - Assume $A\triangleright xy$.
+  - Then $A=BC$ for some $B,C$ where $B\triangleright x$ and $C\triangleright y$ by (P1).
+  - Hence $B\triangleright x'$ and $C\triangleright y'$ by (A1).
+  - Hence $BC\triangleright x'y'$ by (P2).
+  - Since $A=BC$, conclude $A\triangleright x'y'$.
+  - Hence $xy\rightarrow x'y'$.
+</p>
+</details>
+
+
+4. $x\rightarrow x'\ \&\ y\rightarrow y' \Rightarrow x/y'\rightarrow x'/y$
+5. $x \rightarrow (xy)/y$
+
+<details><summary>Proof</summary>
+<p>
+
+  - Note that $xy\rightarrow xy$ by (B1).
+  - By (B3), conclude $x\rightarrow (xy)/y$.
+</p>
+</details>
+
+
+1. $x\rightarrow (y/x)\backslash y$
+
+<details><summary>Proof</summary>
+<p>
+
+  - Note that $(y/x)x \rightarrow y$ by (X1).
+  - By (B4), conclude that $x \rightarrow (y/x)\backslash y$.
+</p>
+</details>
+
+
+7. $x \rightarrow y/(x \backslash y)$
+<details><summary>Proof</summary>
+<p>
+
+  - Note that $x(x\backslash y) \rightarrow y$ by (X2).
+  - By (B3), conclude that $x \rightarrow y/(x \backslash y)$.
+</p>
+</details>
+
+8. $(x/y)(y/z) \rightarrow x/z$
+<details><summary>Proof</summary>
+<p>
+
+  - Note that $x/y \rightarrow x/y$ and $(y/z)z\rightarrow y$ by (B1) and (X1).
+  - Hence $(x/y)(y/z)z\rightarrow (x/y)y$ by (X3).
+  - Since $(x/y)y\rightarrow x$ by (X1) and $\rightarrow$ is transitive by (B5), conclude $(x/y)(y/z)z\rightarrow x$.
+  - Hence $(x/y)(y/z)\rightarrow x/z$ by (B3).
+</p>
+</details>
+
+9.  $(x\backslash y)(y\backslash z) \rightarrow x\backslash z$
+<details><summary>Proof</summary>
+<p>
+
+  - Note that $x(x\backslash y)\rightarrow y$ and $y\backslash z\rightarrow y\backslash z$ by (X2) and (B1).
+  - Hence $x(x\backslash y)(y\backslash z) \rightarrow y(y\backslash z)$ by (X3).
+  - Since $y(y\backslash z) \rightarrow y$ by (X2) and $\rightarrow$ is transitive by (B5), conclude $x(x\backslash y)(y\backslash z)\rightarrow y$.
+  - Hence $(x\backslash y)(y\backslash z)\rightarrow x\backslash z$ by (B4).
+</p>
+</details>
+
+10.    $z/y\rightarrow (z/x)/(y/x)$
+11.    $(x\backslash y)/z \rightleftarrows x\backslash (y/z)$
+12.    $(x/y)/x\rightleftarrows x/(zy)$
+
 
 
 ## Miscellaneous Notes
