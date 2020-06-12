@@ -27,12 +27,12 @@ I am not aware of any sources that model Lambek's original approach in exactly t
 
 It is convenient to have a notion of "product length", i.e. how many times does the $\cdot$ operator occur in a type, or how many lexemes are there in a sentence.
 
-1. Let $\mathtt{len}: X^{+}\ \cup\ T \rightarrow \mathbb{N}$, where:
-   1. For all lexemes $W\in X$, define $\mathtt{len}(W) = 1$.
-   2. For all lexeme sequences $A, B\in X^+$, define $\mathtt{len}(AB) = \mathtt{len}(A) + \mathtt{len}(B)$.
-   3. For all types $x\in T$,
-      1. If $x=y\cdot z$ for some $y,z\in T$ then $\mathtt{len}(x) = \mathtt{len}(y) + \mathtt{len}(z)$;
-      2. Otherwise, $\mathtt{len}(x)=1$.
+**Definition**. Let $\mathtt{len}: X^{+}\ \cup\ T \rightarrow \mathbb{N}$, where:
+  - For all lexemes $W\in X$, define $\mathtt{len}(W) = 1$.
+  - For all lexeme sequences $A, B\in X^+$, define $\mathtt{len}(AB) = \mathtt{len}(A) + \mathtt{len}(B)$.
+  - For all types $x\in T$,
+    - If $x=y\cdot z$ for some $y,z\in T$ then $\mathtt{len}(x) = \mathtt{len}(y) + \mathtt{len}(z)$;
+    - Otherwise, $\mathtt{len}(x)=1$.
 
 Note that this definition of $\mathtt{len}$ over types specifically applies to cases where the dot operator is at the highest precedence operator. For instance, $\mathtt{len}((x\cdot y)/z)$ is equal to 1, not 2.
 
