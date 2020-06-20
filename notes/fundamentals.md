@@ -1,4 +1,4 @@
-# Lambek Calculus
+# Lambek Calculus Fundamentals
 
 In this document, I attempt to formalize the framework presented in Lambek's 1958 "The Mathematics of Sentence Structure". This is done without much in the way of a literature review. Essentially, my goal here is to "fill in the gaps" where Lambek did not provide proofs or formal definitions.
 
@@ -24,6 +24,18 @@ I am not aware of any sources that model Lambek's original approach in exactly t
 10. Let **LC** = $\langle X, L, P, \triangleright \rangle$. We call **LC** a *lambek calculus*.
 
 #### Length Function
+
+##### Comment
+
+This area is under construction. Colin brought the following example to my attention:
+
+$$
+xy \rightarrow (xyz)/z
+$$
+
+This is true by (X5). But currently the RHS has length one. It really should have length 2, I think. Need to give this some thought.
+
+##### Main
 
 It is convenient to have a notion of "product length", i.e. how many times does the $\cdot$ operator occur in a type, or how many lexemes are there in a sentence.
 
@@ -352,4 +364,4 @@ Note that this definition of $\mathtt{len}$ over types specifically applies to c
    $\forall x\in T: \mathtt{len}(x)=n \ \&\ (\exists A\in X^+: A\triangleright x) \Rightarrow \exists A\in X^+ : \mathtt{len}(A)=n\ \&\ A\triangleright x$
 
 ## References
-- "The Mathematics of Sentence Structure" by Joachim Lambek, 1958
+- Lambek, J. (1958). The mathematics of sentence structure. *The American Mathematical Monthly*, 65(3), 154-170.
