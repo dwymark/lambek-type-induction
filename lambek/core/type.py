@@ -1,4 +1,6 @@
+from functools import reduce
 from typing import List
+
 
 class Type:
     pass
@@ -17,6 +19,9 @@ class Primitive(Type):
     def __eq__(self, other):
         return self.name == other.name
 
+    def __len__(self):
+        return 1
+
 
 class Residue(Type):
     def __init__(self, lhs: Type, rhs: Type):
@@ -28,6 +33,9 @@ class Residue(Type):
 
     def __eq__(self, other):
         return self.lhs == other.lhs and self.rhs == other.rhs
+
+    def __len__(self):
+        return len(self.lhs) + len(self.rhs)
 
 
 class LeftResidue(Residue):
@@ -72,6 +80,9 @@ class Product(Type):
         for operand, other_operand in zip(self, other):
             equal = equal and operand == other_operand
         return equal
+
+    def __len__(self):
+        return reduce(lambda x, y: x + y, [len(t) for t in self.operands])
 
 
 class Sequent:
