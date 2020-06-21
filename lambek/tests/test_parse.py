@@ -10,6 +10,7 @@ class ParseTest(unittest.TestCase):
         logging.disable(logging.CRITICAL)
 
     def test_primitive(self):
+        # A string is a valid primitive iff it is a valid C variable name
         a = "a"
         b = "Hello"
         c = "FOO_1"
@@ -20,21 +21,20 @@ class ParseTest(unittest.TestCase):
         valid_a = try_parse(a)
         valid_b = try_parse(b)
         valid_c = try_parse(c)
-        invalid_d = try_parse(d)
-        invalid_e = try_parse(e)
-        invalid_f = try_parse(f)
-
         self.assertIsInstance(valid_a, Primitive)
         self.assertIsInstance(valid_b, Primitive)
         self.assertIsInstance(valid_c, Primitive)
 
-        self.assertEqual(valid_a.name, a)
-        self.assertEqual(valid_b.name, b)
-        self.assertEqual(valid_c.name, c)
-
+        invalid_d = try_parse(d)
+        invalid_e = try_parse(e)
+        invalid_f = try_parse(f)
         self.assertIs(invalid_d, None)
         self.assertIs(invalid_e, None)
         self.assertIs(invalid_f, None)
+
+        self.assertEqual(valid_a.name, a)
+        self.assertEqual(valid_b.name, b)
+        self.assertEqual(valid_c.name, c)
 
     def test_compound(self):
         self.assertIsInstance(try_parse(r"a/b"), RightResidue)
