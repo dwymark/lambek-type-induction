@@ -14,13 +14,13 @@ class SequentTest(unittest.TestCase):
         self.bra = RightResidue(Primitive("b"), Primitive("a"))
 
     def test_str(self):
-        self.assertEqual(str(Sequent([self.arb], self.arb)), "(a/b) => (a/b)")
+        self.assertEqual(str(Sequent([self.arb], self.arb)), "(a/b) -> (a/b)")
         self.assertEqual(
-            str(Sequent([self.arb, Primitive("b")], Primitive("a"))), "(a/b);b => a"
+            str(Sequent([self.arb, Primitive("b")], Primitive("a"))), "(a/b);b -> a"
         )
         self.assertEqual(
             str(Sequent(Product([self.arb, Primitive("b")]), Primitive("a"))),
-            "(a/b)*b => a",
+            "(a/b)*b -> a",
         )
 
     def test_len(self):

@@ -17,7 +17,7 @@ class Sequent:
     def __str__(self):
         antecedent = ";".join([str(t) for t in self.antecedent])
         succedent = str(self.succedent)
-        return f"{antecedent} => {succedent}"
+        return f"{antecedent} -> {succedent}"
 
     @property
     def antecedent(self):
