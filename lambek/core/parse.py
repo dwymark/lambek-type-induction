@@ -7,16 +7,23 @@ from .type import LeftResidue, Primitive, Product, RightResidue
 _type_grammar = r"""
     start: type -> pass_through
 
-    type: PRIMITIVE    -> build_primitive
+    type: simple_type  -> pass_through
+        | safe_type    -> pass_through
         | compound     -> pass_through
         | product      -> pass_through
         | "(" type ")" -> pass_through
 
-    compound: compound_inner -> pass_through
+    compound: safe_type OVER safe_type                 -> build_right_residue
+            | safe_type UNDER safe_type                -> build_left_residue
+            | safe_type UNDER safe_type OVER safe_type -> build_vee
 
-    compound_inner: type OVER type            -> build_right_residue
-                  | type UNDER type           -> build_left_residue
-                  | type UNDER type OVER type -> build_vee
+
+    safe_type: "(" simple_type ")" -> pass_through
+             | PRIMITIVE           -> build_primitive
+
+    simple_type: PRIMITIVE OVER PRIMITIVE                 -> build_right_residue
+               | PRIMITIVE UNDER PRIMITIVE                -> build_left_residue
+               | PRIMITIVE UNDER PRIMITIVE OVER PRIMITIVE -> build_vee
 
     product: product       TIMES type -> expand_product
            | product_inner TIMES type -> expand_product

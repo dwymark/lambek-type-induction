@@ -29,17 +29,30 @@ class ParseTest(unittest.TestCase):
         self.assertIs(invalid_d, None)
         self.assertIs(invalid_e, None)
 
-        self.assertEqual(str(valid_a), a)
-        self.assertEqual(str(valid_b), b)
-        self.assertEqual(str(valid_c), c)
+        self.assertEqual(valid_a.name, a)
+        self.assertEqual(valid_b.name, b)
+        self.assertEqual(valid_c.name, c)
 
-    def test_residue(self):
+    def test_compound(self):
         a = r"a/b"
         b = r"a\b"
+        c = r"a\b\c"
 
         valid_a = try_parse(a)
         valid_b = try_parse(b)
 
         self.assertIsInstance(valid_a, RightResidue)
         self.assertIsInstance(valid_b, LeftResidue)
+
+        self.assertEqual(str(valid_a), "(a/b)")
+
+        self.assertIs(try_parse(r"a/b/c"), None)
+        self.assertIs(try_parse(r"a\b\c"), None)
+        self.assertIsNot(try_parse(r"a\b/c"), None)
+
+        self.assertEqual(str(try_parse(r"(a/b)/c")), r"((a/b)/c)")
+        self.assertEqual(str(try_parse(r"a/(b/c)")), r"(a/(b/c))")
+        self.assertEqual(str(try_parse(r"(a/(b/c))")), r"(a/(b/c))")
+
+        self.assertEqual(str(try_parse(r"((a/(b/c))*(a/(b/c)))")), r"(a/(b/c))*(a/(b/c))")
 
