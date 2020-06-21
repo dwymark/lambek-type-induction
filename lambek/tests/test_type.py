@@ -1,7 +1,7 @@
 import logging
 import unittest
 
-from lambek.core.type import Primitive, LeftResidue, RightResidue, Product
+from lambek.core.type import Primitive, LeftResidue, RightResidue, Product, Sequent
 
 
 class TypeTest(unittest.TestCase):
@@ -27,8 +27,8 @@ class TypeTest(unittest.TestCase):
     def test_compound_equality(self):
         alb_copy = LeftResidue(Primitive("a"), Primitive("b"))
 
-        p1 = Product([self.alb])  # Shouldn't really ever have len 1,
-        p2 = Product([alb_copy])  # but no need to enforce that.
+        p1 = Product(self.alb)   # Shouldn't really ever have len 1,
+        p2 = Product([alb_copy]) # but no need to enforce that.
         p3 = Product([self.alb, self.alb])
         p4 = Product([alb_copy, alb_copy])
         p5 = Product([self.arb, self.bra])
@@ -64,3 +64,14 @@ class TypeTest(unittest.TestCase):
         self.assertEqual(len(self.alb), 2)
         self.assertEqual(len(Product([self.alb, Primitive("abcd")])), 3)
         self.assertEqual(len(Product([self.alb, self.arb, self.bla])), 6)
+
+    def test_seq_str(self):
+        self.assertEqual(str(Sequent([self.arb], self.arb)), "(a/b) => (a/b)")
+        self.assertEqual(
+            str(Sequent([self.arb, Primitive("b")], Primitive("a"))), "(a/b);b => a"
+        )
+        self.assertEqual(
+            str(Sequent(Product([self.arb, Primitive("b")]), Primitive("a"))),
+            "(a/b)*b => a",
+        )
+

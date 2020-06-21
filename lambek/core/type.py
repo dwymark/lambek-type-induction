@@ -56,17 +56,15 @@ class RightResidue(Residue):
 
 class Product(Type):
     def __init__(self, operands: List[Type]):
-        assert len(operands) > 0
+        if not isinstance(operands, list):
+            operands = [operands]
         self.operands = operands
 
     def __repr__(self):
         return str(self)
 
     def __str__(self):
-        string = ""
-        for operand in self:
-            string += str(operand) + "*"
-        return string[:-1]
+        return "*".join([str(t) for t in self.operands])
 
     def __iter__(self):
         for operand in self.operands:
@@ -87,4 +85,17 @@ class Product(Type):
 
 class Sequent:
     def __init__(self, lhs: List[Type], rhs: Type):
-        pass
+        if not isinstance(lhs, list):
+            lhs = [lhs]
+        self.lhs = lhs
+        self.rhs = rhs
+
+    def __repr__(self):
+        return str(self)
+
+    def __str__(self):
+        lhs = ";".join([str(t) for t in self.lhs])
+        rhs = str(self.rhs)
+        return f"{lhs} => {rhs}"
+
+
