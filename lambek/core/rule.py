@@ -5,7 +5,7 @@ from .type import Type
 from .sequent import Sequent
 
 
-_index_kind_strs = ["T", "T+", "T*"]
+_index_kind_strs = ["", "+", "*"]
 
 
 class IndexKind(Enum):
@@ -23,8 +23,11 @@ class Index(Type):
         self.idx = idx
         self.kind = kind
 
+    def __repr__(self):
+        return str(self)
+
     def __str__(self):
-        return f"{self.kind}_{self.idx}"
+        return f"${self.idx}{self.kind}"
 
 
 class Rule:
@@ -39,6 +42,14 @@ class Rule:
         lhs = "&".join([f"({t})" for t in self.premises])
         rhs = str(self.conclusion)
         return f"{lhs}=>({rhs})"
+
+    def pretty_str(self):
+        premises = [str(p) for p in self.premises]
+        longest = max([len(p) for p in premises] + [len(str(self.conclusion))])
+        return "\n".join(premises) + "\n" + "-" * longest + "\n" + str(self.conclusion)
+
+    def pprint(self):
+        print(self.pretty_str())
 
     @property
     def premises(self):
